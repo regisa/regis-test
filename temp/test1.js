@@ -15,7 +15,7 @@ function test1(request, context) {
     return __awaiter(this, void 0, void 0, function* () {
         context.log(`Http function processed request for url "${request.url}"`);
         const name = request.query.get('name') || (yield request.text()) || 'world';
-        return { body: `test1 #2, ${name}!` };
+        return { body: `test1 #4, ${name}!` };
     });
 }
 exports.test1 = test1;
