@@ -33,11 +33,16 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
 
+      - name: Create .npmrc file
+        run: |
+          echo '@livestories:registry=https://npm.pkg.github.com' > ./app/.npmrc
+          echo '//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}' >> ./app/.npmrc
+
       - name: 'Resolve Project Dependencies Using Npm'
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          pnpm config set node-linker hoisted
           pnpm install
-          cp -LR node_modules tmp && rm -rf node_modules && mv tmp node_modules
           pnpm build
           popd
 
