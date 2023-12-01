@@ -17,9 +17,6 @@ jobs:
   build-and-deploy:
     runs-on: windows-latest
     steps:
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
 
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v4
@@ -28,6 +25,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+
+      - name: 'Setup PNPM'
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
 
       - name: 'Resolve Project Dependencies Using Npm'
         shell: pwsh
