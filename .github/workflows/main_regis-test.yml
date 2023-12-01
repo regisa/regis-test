@@ -35,8 +35,8 @@ jobs:
 
       - name: Create .npmrc file
         run: |
-          echo '@livestories:registry=https://npm.pkg.github.com' > ./app/.npmrc
-          echo '//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}' >> ./app/.npmrc
+          echo '@livestories:registry=https://npm.pkg.github.com' > .npmrc
+          echo '//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}' >> .npmrc
 
       - name: 'Resolve Project Dependencies Using Npm'
         run: |
