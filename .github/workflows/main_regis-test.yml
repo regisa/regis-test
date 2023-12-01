@@ -10,7 +10,6 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.' # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '18.x' # set this to the node version to use (supports 8.x, 10.x, 12.x)
 
 jobs:
@@ -27,20 +26,20 @@ jobs:
           version: 8
           run_install: false
 
-      - name: Setup Node ${{ env.NODE_VERSION }} Environment
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '18.x'
           cache: 'pnpm'
 
       - name: Create .npmrc file
         run: |
-          echo '@livestories:registry=https://npm.pkg.github.com' > .npmrc
-          echo '//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}' >> .npmrc
+          echo '@livestories:registry=https://npm.pkg.github.com' > ./api/.npmrc
+          echo '//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}' >> ./api/.npmrc
 
-      - name: 'Resolve Project Dependencies Using PNPM'
+      - name: 'Resolve Dependencies - PNPM'
         run: |
-          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          pushd './api'
           pnpm config set node-linker hoisted
           pnpm install
           pnpm build
@@ -52,5 +51,5 @@ jobs:
         with:
           app-name: 'regis-test'
           slot-name: 'Production'
-          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          package: api
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A325C9658EF544AD84EF932FFC03E043 }}
