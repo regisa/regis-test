@@ -37,7 +37,8 @@ jobs:
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           pnpm install
-          pnpm run build
+          cp -LR node_modules tmp && rm -rf node_modules && mv tmp node_modules
+          pnpm build
           popd
 
       - name: 'Run Azure Functions Action'
