@@ -36,8 +36,8 @@ jobs:
       - name: 'Resolve Project Dependencies Using Npm'
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          npm install
-          npm run build
+          pnpm install
+          pnpm run build
           popd
 
       - name: 'Run Azure Functions Action'
