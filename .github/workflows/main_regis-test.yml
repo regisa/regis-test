@@ -44,7 +44,6 @@ jobs:
           pnpm config set node-linker hoisted
           pnpm install
           pnpm build
-          rm -rf node_modules
           popd
 
       - name: 'Run Azure Functions Action'
