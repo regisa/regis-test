@@ -5,7 +5,7 @@ export async function test1(request: HttpRequest, context: InvocationContext): P
 
     const name = request.query.get('name') || await request.text() || 'world';
 
-    return { body: `test1 #3, ${name}!` };
+    return { body: `test1 #4, ${name}!` };
 };
 
 app.http('test1', {

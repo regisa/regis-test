@@ -38,12 +38,13 @@ jobs:
           echo '@livestories:registry=https://npm.pkg.github.com' > .npmrc
           echo '//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}' >> .npmrc
 
-      - name: 'Resolve Project Dependencies Using Npm'
+      - name: 'Resolve Project Dependencies Using PNPM'
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           pnpm config set node-linker hoisted
           pnpm install
           pnpm build
+          rm -rf node_modules
           popd
 
       - name: 'Run Azure Functions Action'
